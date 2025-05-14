@@ -87,3 +87,4 @@ static/
 
 # Ignore hotel images
 static/hotel_images/
+CustomerService/skaffold
