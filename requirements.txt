@@ -1,0 +1,16 @@
+quart
+sqlalchemy
+quart
+asyncmy
+hypercorn
+python-dotenv
+mysqlclient
+pymysql
+httpx
+argon2
+pydantic
+cryptography
+aiokafka
+argon2-cffi
+argon2-cffi-bindings
+pydantic['email']

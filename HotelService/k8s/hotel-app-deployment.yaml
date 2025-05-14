@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hotels
+  namespace: default
+  labels:
+    app: hotels
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hotels
+  template:
+    metadata:
+      labels:
+        app: hotels
+    spec:
+      containers:
+        - name: hotels-service
+          image: mwyoung414/hotels-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: HOTELS_DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: hotels-db-credentials
+                  key: HOTELS_DB_URL
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: hotels-config
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: hotels-config
+                  key: DB_PORT
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"

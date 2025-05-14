@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: email-service
+  namespace: default
+  labels:
+    app: email-service
+spec:
+  selector:
+    matchLabels:
+      app: email-service
+  template:
+    metadata:
+      labels:
+        app: email-service
+    spec:
+      containers:
+      - name: email-service
+        image: <Image>
+        imagePullPolicy: Always
+        env:
+        - name: APP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: email-password
+              key: app-password
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 465

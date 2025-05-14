@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hotels-config
+data:
+  DB_HOST: hotels-db.default.svc.cluster.local
+  DB_PORT: "3306"

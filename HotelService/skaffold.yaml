@@ -1,0 +1,17 @@
+apiVersion: skaffold/v4beta13
+kind: Config
+metadata:
+  name: hotelservice
+build:
+  artifacts:
+    - image: mwyoung414/hotels-service
+      docker:
+        dockerfile: Dockerfile
+manifests:
+  rawYaml:
+    - k8s/hotel-app-deployment.yaml
+    - k8s/hotel-app-service-loadbalancer.yaml
+    - k8s/hotel-mysql-configmap.yaml
+    - k8s/hotel-mysql-service.yaml
+    - k8s/hotel-mysql-statefulset.yaml
+    - k8s/hotel-secrets.yaml

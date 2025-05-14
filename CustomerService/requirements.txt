@@ -1,0 +1,11 @@
+sqlalchemy
+quart
+asyncmy
+hypercorn
+python-dotenv
+mysqlclient
+pymysql
+cryptography
+pydantic
+argon2-cffi
+argon2-cffi-bindings

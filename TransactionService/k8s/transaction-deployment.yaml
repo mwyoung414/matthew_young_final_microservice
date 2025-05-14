@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transactions
+  namespace: default
+  labels:
+    app: transactions
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transactions
+  template:
+    metadata:
+      labels:
+        app: transactions
+    spec:
+      containers:
+        - name: transactions
+          image: mwyoung414/transactions-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+
+          env:
+            - name: TRANSACTIONS_DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: transactions-db-credentials
+                  key: TRANSACTIONS_DB_URL
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: transactions-config
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: transactions-config
+                  key: DB_PORT
+            - name: DB_USER
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"

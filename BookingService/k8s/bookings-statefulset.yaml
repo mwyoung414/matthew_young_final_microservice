@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: bookings-db
+spec:
+  selector:
+    matchLabels:
+      app: bookings-db
+  serviceName: bookings-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bookings-db
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bookings-db-credentials
+                  key: bookings-root-password
+            - name: MYSQL_DATABASE
+              value: bookings
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: standard
+        resources:
+          requests:
+            storage: 1Gi

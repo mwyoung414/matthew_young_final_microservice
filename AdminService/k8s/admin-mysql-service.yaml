@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: admins-db
+spec:
+  clusterIP: None
+  selector:
+    app: admins-db
+  ports:
+  - name: admins-mysql 
+    port: 3306
+    targetPort: 3306

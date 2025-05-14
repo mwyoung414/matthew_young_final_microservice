@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: hotels-db
+spec:
+  selector:
+    matchLabels:
+      app: hotels-db
+  serviceName: hotels-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hotels-db
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: hotels-db-credentials
+                  key: hotels-root-password
+            - name: MYSQL_DATABASE
+              value: hotels
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: standard
+        resources:
+          requests:
+            storage: 1Gi

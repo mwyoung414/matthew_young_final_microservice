@@ -1,0 +1,8 @@
+sqlalchemy
+quart
+asyncmy
+hypercorn
+python-dotenv
+mysqlclient
+pymysql
+cryptography

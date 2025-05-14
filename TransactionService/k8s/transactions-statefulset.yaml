@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: transactions-db
+spec:
+  selector:
+    matchLabels:
+      app: transactions-db
+  serviceName: transactions-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: transactions-db
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: transactions-db-credentials
+                  key: transactions-root-password
+            - name: MYSQL_DATABASE
+              value: transactions
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: standard
+        resources:
+          requests:
+            storage: 1Gi

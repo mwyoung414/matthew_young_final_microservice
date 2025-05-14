@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rooms
+  namespace: default
+  labels:
+    app: rooms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rooms
+  template:
+    metadata:
+      labels:
+        app: rooms
+    spec:
+      containers:
+        - name: rooms-service
+          image: mwyoung414/common-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: ROOMS_DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: rooms-db-credentials
+                  key: ROOMS_DB_URL
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: rooms-config
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: rooms-config
+                  key: DB_PORT
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"

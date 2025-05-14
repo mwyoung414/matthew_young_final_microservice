@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: admins
+  namespace: default
+  labels:
+    app: admins
+spec:
+  type: LoadBalancer
+  selector:
+    app: admins
+  ports:
+    - name: http
+      port: 30083
+      targetPort: 8000

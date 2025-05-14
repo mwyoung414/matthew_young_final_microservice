@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: admins-config
+data:
+  DB_HOST: admins-db.default.svc.cluster.local
+  DB_PORT: "3306"

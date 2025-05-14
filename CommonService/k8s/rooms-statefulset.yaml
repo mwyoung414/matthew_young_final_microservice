@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: rooms-db
+spec:
+  selector:
+    matchLabels:
+      app: rooms-db
+  serviceName: rooms-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rooms-db
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rooms-db-credentials
+                  key: rooms-root-password
+            - name: MYSQL_DATABASE
+              value: rooms
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: standard
+        resources:
+          requests:
+            storage: 1Gi

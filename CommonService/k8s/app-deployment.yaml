@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: states
+  namespace: default
+  labels:
+    app: states
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: states
+  template:
+    metadata:
+      labels:
+        app: states
+    spec:
+      containers:
+        - name: commonservice
+          image: mwyoung414/common-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: STATE_DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: shared-db-credentials
+                  key: STATE_DB_URL
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: states-config
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: states-config
+                  key: DB_PORT
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"

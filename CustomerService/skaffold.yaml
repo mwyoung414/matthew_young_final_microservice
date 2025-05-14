@@ -1,0 +1,17 @@
+apiVersion: skaffold/v4beta13
+kind: Config
+metadata:
+  name: customerservice
+build:
+  artifacts:
+    - image: mwyoung414/customer-service
+      docker:
+        dockerfile: Dockerfile
+manifests:
+  rawYaml:
+    - k8s/customer-app-deployment.yaml
+    - k8s/customer-app-service-nodeport.yaml
+    - k8s/customer-mysql-configmap.yaml
+    - k8s/customer-mysql-service.yaml
+    - k8s/customer-mysql-statefulset.yaml
+    - k8s/customer-secrets.yaml

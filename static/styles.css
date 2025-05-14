@@ -1,0 +1,161 @@
+html {
+    font-size: 16px;
+    line-height: 1.5;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    height: 100vh;
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 1em 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none; 
+    padding: 0;
+    margin: 0;
+    display: flex; 
+    justify-content: center; 
+}
+
+nav ul li {
+    margin: 0 15px; 
+}
+
+header nav ul li a {
+    text-decoration: none; 
+    color: #ffffff; 
+    font-weight: bold; 
+}
+
+nav ul li a:hover {
+    color: #007BFF; /
+}
+
+#admin_actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.modal-header .modal-title,
+.modal-body label {
+    color: #222; 
+}
+
+.modal-backdrop {
+    z-index: 1040;
+}
+
+.modal-content {
+    background: rgb(200, 196, 196); 
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 85%;
+    max-width: 500px; 
+    border-radius: 10px;
+}
+
+.modal-content .close {
+    position: absolute; /* Position relative to the modal-content */
+    top: 10px; /* Distance from the top */
+    right: 10px; /* Distance from the right */
+    font-size: 20px; /* Adjust size */
+    font-weight: bold;
+    background-color: #1e1e1e; /* or #222, still dark but not pitch black */
+    color: #f8f9fa;  
+    cursor: pointer; /* Change cursor to pointer */
+}
+
+
+.modal-content .close:hover {
+    color: red; /* Optional: Change color on hover */
+}
+
+.form-column {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px; /* Optional: limit width */
+    gap: 10px; /* Space between rows */
+
+}
+
+
+.form-column div {
+    display: flex;
+    flex-direction: column;
+}
+
+#layout {
+    display:flex;
+    height: 100vh;
+}
+
+label {
+    color: #000000;          /* great for the dark page…   */
+}
+
+#addUserForm {
+    display: grid;
+    grid-template-columns: auto 1fr;   /* col‑1 = label, col‑2 = input */
+    align-items: center;               /* vertically centre label & input */
+    row-gap: 1rem;                     /* space between rows */
+    column-gap: 1.5rem;                /* space between the two columns */
+    max-width: 400px;                  /* optional: keep modal narrow   */
+}
+
+#adminLoginForm label
+{
+    color: #f8f9fa !important;  /* or #fff for pure white */
+    font-weight: 500;
+}
+
+#loginform label
+{
+    color: #f8f9fa !important;  /* or #fff for pure white */
+    font-weight: 500;
+}
+
+/* labels right‑aligned so text sits next to its input */
+#addUserForm label   { text-align: right; 
+                        padding-right: 1rem; 
+                        color: #000000;          /* great for the dark page…   */
+                        font-weight: bold;       /* optional: make labels bold */
+                      }
+
+#customerForm {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 2rem auto;
+    gap: 1rem;
+}
+
+#customerForm label {
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+#customerForm input {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+
+/* make every control fill the second column’s width */
+#addUserForm input,
+#addUserForm select,
+#addUserForm button  { width: 100%; }
+
+#addUserForm button  { margin-top: .5rem; }  

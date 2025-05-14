@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rooms-config
+data:
+  DB_HOST: rooms-db.default.svc.cluster.local
+  DB_PORT: "3306"

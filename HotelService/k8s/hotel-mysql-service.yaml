@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hotels-db
+spec:
+  clusterIP: None
+  selector:
+    app: hotels-db
+  ports:
+  - name: hotels-mysql 
+    port: 3306
+    targetPort: 3306

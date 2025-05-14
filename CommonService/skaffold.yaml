@@ -1,0 +1,12 @@
+apiVersion: skaffold/v4beta13
+kind: Config
+metadata:
+  name: commonservice
+build:
+  artifacts:
+    - image: mwyoung414/common-service
+      docker:
+        dockerfile: Dockerfile
+manifests:
+  rawYaml:
+    - k8s/*.yaml

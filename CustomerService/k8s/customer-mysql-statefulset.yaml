@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: customer-db
+spec:
+  selector:
+    matchLabels:
+      app: customer-db
+  serviceName: customer-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: customer-db
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: customer-db-credentials
+                  key: customer-root-password
+            - name: MYSQL_DATABASE
+              value: customers
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: standard
+        resources:
+          requests:
+            storage: 1Gi

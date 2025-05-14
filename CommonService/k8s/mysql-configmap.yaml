@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: states-config
+data:
+  DB_HOST: states-db.default.svc.cluster.local
+  DB_PORT: "3306"

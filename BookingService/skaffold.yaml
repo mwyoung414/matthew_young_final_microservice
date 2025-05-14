@@ -1,0 +1,17 @@
+apiVersion: skaffold/v4beta13
+kind: Config
+metadata:
+  name: bookingservice
+build:
+  artifacts:
+    - image: mwyoung414/bookings-service
+      docker:
+        dockerfile: Dockerfile
+manifests:
+  rawYaml:
+    - k8s/bookings-deployment.yaml
+    - k8s/bookings-loadbalancer.yaml
+    - k8s/bookings-configmap.yaml
+    - k8s/bookings-service.yaml
+    - k8s/bookings-statefulset.yaml
+    - k8s/bookings-secrets.yaml

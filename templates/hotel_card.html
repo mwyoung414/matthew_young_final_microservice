@@ -1,0 +1,39 @@
+<!-- Hotel Card Component -->
+<div class="card hotel-card shadow-sm mb-4">
+    <!-- Hotel Image -->
+    <img src="{{ url_for('static', filename='hotel_images/' ~ hotel.id ~ '.png') }}" class="card-img-top" alt="{{ hotel.name }}" 
+         onerror="this.src='{{ url_for('static', filename='hotel_images/no-hotel-image.png') }}';"
+         style="height: 200px; object-fit: cover;">
+    
+    <div class="card-body">
+        <!-- Hotel Name and Rating -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h5 class="card-title mb-0">{{ hotel.name }}</h5>
+            <div class="hotel-rating">
+                {% for i in range((hotel.rating)|int) %}
+                <i class="bi bi-star-fill text-warning"></i>
+                {% endfor %}
+                {% for i in range(5 - (hotel.rating|int)) %}
+                <i class="bi bi-star text-secondary"></i>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Hotel Location -->
+        <p class="card-text text-muted">
+            <i class="bi bi-geo-alt-fill"></i>
+            {{ hotel.address }}, {{ hotel.city }}, {{ hotel.state }}
+        </p>
+        
+        <!-- Hotel Description -->
+        <p class="card-text description-text">
+            {{ hotel.description|truncate(150) if hotel.description else "No description available." }}
+        </p>
+    </div>
+    
+    <div class="card-footer bg-white border-top-0">
+        <div class="d-flex justify-content-between">
+            <a href="{{ url_for('book_hotel', hotel_id=hotel.id) }}" class="btn btn-outline-primary">Book Now</a>
+        </div>
+    </div>
+</div>

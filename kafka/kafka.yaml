@@ -1,0 +1,51 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: kafka-cluster
+  namespace: default
+  labels:
+    app: kafka-cluster
+    strimzi.io/cluster: kafka-cluster
+spec:
+  kafka:
+    version: 3.5.0
+    replicas: 3
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+
+      - name: external
+        port: 9094
+        type: nodeport
+        tls: false
+        configuration:
+          bootstrap:
+            nodePort: 30092
+          brokers:
+            - broker: 0
+              nodePort: 30093
+            - broker: 1
+              nodePort: 30094
+            - broker: 2
+              nodePort: 30095
+    config:
+      auto.create.topics.enable: "false"
+      log.message.format.version: "3.5"
+      inter.broker.listener.name: plain
+    storage:
+      type: persistent-claim
+      size: 5Gi
+      class: standard
+  zookeeper:
+    replicas: 3
+    storage:
+      type: persistent-claim
+      size: 5Gi
+      class: standard
+  entityOperator:
+    topicOperator:
+      image: strimzi/topic-operator:v0.35.0
+    userOperator:
+      image: strimzi/user-operator:v0.35.0

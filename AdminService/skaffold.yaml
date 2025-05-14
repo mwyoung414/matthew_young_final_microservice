@@ -1,0 +1,17 @@
+apiVersion: skaffold/v4beta13
+kind: Config
+metadata:
+  name: adminservice
+build:
+  artifacts:
+    - image: mwyoung414/admins-service
+      docker:
+        dockerfile: Dockerfile
+manifests:
+  rawYaml:
+    - k8s/admin-app-deployment.yaml
+    - k8s/admin-app-service-nodeport.yaml
+    - k8s/admin-mysql-configmap.yaml
+    - k8s/admin-mysql-service.yaml
+    - k8s/admin-mysql-statefulset.yaml
+    - k8s/admin-secrets.yaml

@@ -1,0 +1,12 @@
+apiVersion: skaffold/v4beta13
+kind: Config
+metadata:
+  name: transactionservice
+build:
+  artifacts:
+    - image: mwyoung414/transactions-service
+      docker:
+        dockerfile: Dockerfile
+manifests:
+  rawYaml:
+    - k8s/*.yaml

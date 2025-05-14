@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: states-db
+spec:
+  selector:
+    matchLabels:
+      app: states-db
+  serviceName: states-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: states-db
+    spec:
+      volumes:
+        - name: seed
+          configMap:
+            name: state-seed-sql
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: shared-db-credentials
+                  key: mysql-root-password
+            - name: MYSQL_DATABASE
+              value: states
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+            - name: seed
+              mountPath: /docker-entrypoint-initdb.d
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: standard
+        resources:
+          requests:
+            storage: 1Gi

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: transactions-config
+data:
+  DB_HOST: transactions-db.default.svc.cluster.local
+  DB_PORT: "3306"

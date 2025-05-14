@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookings
+  namespace: default
+  labels:
+    app: bookings
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookings
+  template:
+    metadata:
+      labels:
+        app: bookings
+    spec:
+      containers:
+        - name: bookings-service
+          image: mwyoung414/bookings-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: BOOKINGS_DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: bookings-db-credentials
+                  key: BOOKINGS_DB_URL
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: bookings-config
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: bookings-config
+                  key: DB_PORT
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"

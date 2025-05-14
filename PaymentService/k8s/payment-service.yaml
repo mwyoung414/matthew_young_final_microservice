@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment
+  namespace: default
+  labels:
+    app: payment
+spec:
+  type: LoadBalancer
+  selector:
+    app: payment
+  ports:
+    - name: http
+      port: 30088
+      targetPort: 8000

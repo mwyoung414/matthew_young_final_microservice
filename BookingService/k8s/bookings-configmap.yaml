@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bookings-config
+data:
+  DB_HOST: bookings-db.default.svc.cluster.local
+  DB_PORT: "3306"
